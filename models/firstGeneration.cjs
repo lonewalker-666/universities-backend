@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
-  class Grade extends Model {
+  class FirstGeneration extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,12 +11,13 @@ module.exports = (sequelize, Sequelize) => {
       // define association here
     }
   }
-  Grade.init(
+  FirstGeneration.init(
     {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true,
       },
       name: {
         type: Sequelize.STRING,
@@ -32,21 +33,13 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull:false
       },
-      deleted_at:{
-        type: Sequelize.DATE,
-        allowNull:true,
-      },
-      deleted_by:{
-        type: Sequelize.STRING,
-        allowNull:true
-      }
     },
     {
       sequelize,
-      modelName: "Grade",
-      tableName: "grade",
+      modelName: "FirstGeneration",
+      tableName: "firstGeneration",
       timestamps: false
     }
   );
-  return Grade;
+  return FirstGeneration;
 }

@@ -2,17 +2,33 @@
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
 
-const generateToken = function (user, secret, expiration) {
-  return jwt.sign(user, secret, {
-    expiresIn: expiration,
-  });
+
+
+const generateAccessToken = (user) => {
+  return jwt.sign(
+    {
+      id: user.id,
+      firstName: user.firstName,
+      email: user.email,
+      mobile: user.mobile,
+    },
+    config.accessSecret,
+    { expiresIn: config.accessTokenExpiration }
+  );
 };
 
-const generateAccessToken = (user) =>
-  generateToken(user, config.accessSecret, config.accessTokenExpiration);
-
-const generateRefreshToken = (user) =>
-  generateToken(user, config.refreshSecret, config.refreshTokenExpiration);
+const generateRefreshToken = (user) => {
+  return jwt.sign(
+    {
+      id: user.id,
+      firstName: user.firstName,
+      email: user.email,
+      mobile: user.mobile,
+    },
+    config.refreshSecret,
+    { expiresIn: config.refreshTokenExpiration }
+  );
+};
 
 const issueToken = (token) => {
   try {

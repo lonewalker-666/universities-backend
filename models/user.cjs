@@ -16,12 +16,16 @@ module.exports = (sequelize, Sequelize) => {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
       },
-      name: {
+      firstName: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+      },
+      lastName: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       grade_id: {
         type: Sequelize.INTEGER,
@@ -79,15 +83,19 @@ module.exports = (sequelize, Sequelize) => {
           key: "id",
         },
       },
-      first_generation: {
-        type: Sequelize.BOOLEAN,
-        allowNull: true,
-      },
-      scholarship_id: {
+      first_generation_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "Scholarship",
+          model: "FirstGeneration",
+          key: "id",
+        },
+      },
+      financial_aid_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "FinancialAid",
           key: "id",
         },
       },
@@ -140,6 +148,32 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      otp: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      otp_expire_at: {
+        type: Sequelize.DATE,
+        allowNull:true
+      },
+      password:{
+        type: Sequelize.STRING,
+        allowNull:true,
+      },
+      password_lastUpdated:{
+        allowNull:true,
+        type:Sequelize.STRING
+      },
+      emailVerified:{
+        allowNull:false,
+        type:Sequelize.BOOLEAN,
+        defaultValue:false
+      },
+      mobileVerified:{
+        allowNull:false,
+        type:Sequelize.BOOLEAN,
+        defaultValue:false
+      }
     },
     {
       sequelize,
