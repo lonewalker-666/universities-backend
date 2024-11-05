@@ -27,14 +27,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      grade_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: "Grade",
-          key: "id",
-        },
-      },
       location: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -66,6 +58,10 @@ module.exports = (sequelize, Sequelize) => {
           model: "Race",
           key: "id",
         },
+      },
+      class_rank: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       armed_force_status_id: {
         type: Sequelize.INTEGER,
@@ -115,12 +111,20 @@ module.exports = (sequelize, Sequelize) => {
           key: "id",
         },
       },
-      college_start_date:{
+      college_start_date: {
         type: Sequelize.DATE,
         allowNull: true,
       },
-      gpa:{
+      graduation_date: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
+      gpa: {
         type: Sequelize.FLOAT,
+        allowNull: true,
+      },
+      about:{
+        type: Sequelize.STRING,
         allowNull: true,
       },
       plan_id: {
@@ -154,26 +158,47 @@ module.exports = (sequelize, Sequelize) => {
       },
       otp_expire_at: {
         type: Sequelize.DATE,
-        allowNull:true
+        allowNull: true,
       },
-      password:{
+      password: {
         type: Sequelize.STRING,
-        allowNull:true,
+        allowNull: true,
       },
-      password_lastUpdated:{
-        allowNull:true,
-        type:Sequelize.STRING
+      password_lastUpdated: {
+        allowNull: true,
+        type: Sequelize.STRING,
       },
-      emailVerified:{
-        allowNull:false,
-        type:Sequelize.BOOLEAN,
-        defaultValue:false
+      emailVerified: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
-      mobileVerified:{
-        allowNull:false,
-        type:Sequelize.BOOLEAN,
-        defaultValue:false
-      }
+      mobileVerified: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+      about: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      houseHeld: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      physical_disability: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN,
+      },
+      additionalInfo: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      profileEmojiId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+      },
     },
     {
       sequelize,

@@ -1,16 +1,17 @@
 /* eslint-disable no-useless-catch */
 import jwt from "jsonwebtoken";
 import config from "../config/config.js";
-
-
+import model from "../models/index.js";
 
 const generateAccessToken = (user) => {
   return jwt.sign(
     {
       id: user.id,
       firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       mobile: user.mobile,
+      plan_id: user.plan_id,
     },
     config.accessSecret,
     { expiresIn: config.accessTokenExpiration }
@@ -22,8 +23,10 @@ const generateRefreshToken = (user) => {
     {
       id: user.id,
       firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       mobile: user.mobile,
+      plan_id: user.plan_id,
     },
     config.refreshSecret,
     { expiresIn: config.refreshTokenExpiration }
@@ -33,13 +36,14 @@ const generateRefreshToken = (user) => {
 const issueToken = (token) => {
   try {
     const decoded = jwt.verify(token, config.refreshSecret);
-    const { id, firstName, lastName, email, phoneNumber } = decoded;
+    const { id, firstName, lastName, email, phoneNumber, plan_id } = decoded;
     const user = {
       id,
       firstName,
       lastName,
       email,
       phoneNumber,
+      plan_id,
     };
 
     return generateAccessToken(user);
@@ -48,44 +52,54 @@ const issueToken = (token) => {
   }
 };
 
-const authenticateToken = (req, res, next) => {
-  const token = req.headers.authorization;
-  if (token) {
-    try {
-      const { exp } = jwt.decode(token);
-      if (exp * 1000 < Date.now()) {
-        return res.status(401).json({
-          success: false,
-          data: {
-            message: "Token has expired",
-          },
-        });
-      }
-      const decoded = jwt.verify(token, config.accessSecret);
-      const { id, firstName, lastName, email } = decoded;
-      const user = {
-        id,
-        firstName,
-        lastName,
-        email,
-      };
+const authenticateToken = async (req, res, next) => {
+  let token = req.headers.authorization;
+  if (token && token.startsWith("Bearer ")) {
+    token = token.slice(7, token.length); // Remove "Bearer " prefix if present
+  }
 
-      req.user = user;
-      next();
-    } catch (error) {
-      return res.json({
-        success: false,
-        data: {
-          error,
-        },
-      });
-    }
-  } else {
+  if (!token) {
     return res.status(401).json({
       success: false,
-      data: {
-        message: "authorization not provided",
-      },
+      data: { message: "Authorization not provided" },
+    });
+  }
+
+  try {
+    // Check if token is expired
+    const { exp } = jwt.decode(token);
+    if (exp * 1000 < Date.now()) {
+      return res.status(401).json({
+        success: false,
+        data: { message: "Token has expired" },
+      });
+    }
+
+    // Verify token with secret
+    const decoded = jwt.verify(token, config.accessSecret);
+    const { id, firstName, lastName, email, phoneNumber, plan_id } = decoded;
+
+    // Check for active user session
+    const checkUser = await model.UserLogs.findOne({
+      where: { user_id: id, access_token: token, deleted_at: null },
+    });
+
+    if (!checkUser) {
+      return res.status(401).json({
+        success: false,
+        data: { message: "Session Timed Out" },
+      });
+    }
+
+    // Attach user data to request
+    req.user = { id, firstName, lastName, email, phoneNumber, plan_id };
+    next();
+
+  } catch (error) {
+    console.error("Token verification error:", error); // Log for debugging purposes
+    return res.status(403).json({
+      success: false,
+      data: { message: "Token verification failed" },
     });
   }
 };

@@ -29,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       address:{
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       city:{
         type: Sequelize.STRING,
@@ -41,7 +41,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       zipcode:{
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       created_at:{
         type: Sequelize.DATE,

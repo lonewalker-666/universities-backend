@@ -56,6 +56,15 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull:false
       },
+      updated_at:{
+        type: Sequelize.DATE,
+        allowNull:false,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      },
+      updated_by:{
+        type: Sequelize.STRING,
+        allowNull:false
+      },
       deleted_at:{
         type: Sequelize.DATE,
         allowNull:true,
@@ -69,7 +78,13 @@ module.exports = (sequelize, Sequelize) => {
       sequelize,
       modelName: "TestScore",
       tableName: "testScore",
-      timestamps: false
+      timestamps: false,
+      indexes: [
+        {
+          unique: true, // Create a combined unique index
+          fields: ["subject_id","user_id"], // Specify the columns
+        },
+      ],
     }
   );
   return TestScore;

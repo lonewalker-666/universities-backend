@@ -3,6 +3,7 @@ import Joi from "joi";
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
+  deviceID: Joi.string().default("").required()
 });
 
 const createUserSchema = Joi.object({
@@ -10,7 +11,17 @@ const createUserSchema = Joi.object({
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
+  verificationId:Joi.string().required(),
   deviceID: Joi.string().default("").required(),
+});
+
+const getOtpSchema = Joi.object({
+  email: Joi.string().email().required(),
+});
+
+const verifyOtpSchema = Joi.object({
+  email: Joi.string().email().required(),
+  otp: Joi.string().required().pattern(/^\d{6}$/),
 });
 
 const verifyGoogleUserSchema = Joi.object({
@@ -26,4 +37,6 @@ export {
   createUserSchema,
   verifyFacebookUserSchema,
   verifyGoogleUserSchema,
+  getOtpSchema,
+  verifyOtpSchema
 };

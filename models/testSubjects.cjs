@@ -31,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
           key: "id",
         },
       },
-      totalScore: {
+      total_score: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
