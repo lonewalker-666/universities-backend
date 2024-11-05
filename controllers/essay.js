@@ -26,7 +26,7 @@ const getEssay = async (req, res) => {
 
 const getEssayOne = async (req, res) => {
   try {
-    const { error } = getEssayOneDataSchema.validate(req.body, {
+    const { error } = getEssayOneDataSchema.validate(req.params, {
       abortEarly: false,
     });
     if (error) {
@@ -45,7 +45,7 @@ const getEssayOne = async (req, res) => {
       });
     }
     const essays = await model.Essay.findOne({
-      where: { user_id,essayId: req.body.essayId },
+      where: { user_id,essayId: req.params.essayId },
     });
     if (!essays) {
       return res.json({
