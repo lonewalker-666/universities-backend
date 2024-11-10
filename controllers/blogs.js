@@ -44,7 +44,7 @@ const getAllBlogs = async (req, res) => {
         console.error("Error in getAllBlogs:", error);
         loggers.error(error.message + " from getAllBlogs function");
 
-        return res.json({
+        return res.status(500).json({
             success: false,
             message: error.message,
         });
@@ -59,7 +59,7 @@ const getBlogData = async (req, res) => {
             "Validation error: " +
               error.details.map((err) => err.message).join(", ")
           );
-          return res.json({
+          return res.status(400).json({
             success: false,
             message: error.details[0].message,
           });
@@ -101,7 +101,7 @@ const getBlogData = async (req, res) => {
             }]
         });
         if(!blog){
-            return res.json({
+            return res.status(404).json({
                 success: false,
                 message: "Blog not found",
             });
@@ -115,7 +115,7 @@ const getBlogData = async (req, res) => {
         console.error("Error in getAllBlogs:", error);
         loggers.error(error.message + " from getAllBlogs function");
 
-        return res.json({
+        return res.status(500).json({
             success: false,
             message: error.message,
         });

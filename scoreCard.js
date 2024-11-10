@@ -130,6 +130,7 @@ const localeMap = {
 async function fetchCollegeData() {
     try {
         const response = await axios.get(baseUrl, { params });
+        console.log(response?.request);
         if (response.status === 200) {
             const data = response.data;
             if (data.results.length === 0) {

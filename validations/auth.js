@@ -11,7 +11,6 @@ const createUserSchema = Joi.object({
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
-  verificationId:Joi.string().required(),
   deviceID: Joi.string().default("").required(),
 });
 

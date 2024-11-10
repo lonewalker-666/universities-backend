@@ -97,7 +97,7 @@ const authenticateToken = async (req, res, next) => {
 
   } catch (error) {
     console.error("Token verification error:", error); // Log for debugging purposes
-    return res.status(403).json({
+    return res.status(401).json({
       success: false,
       data: { message: "Token verification failed" },
     });

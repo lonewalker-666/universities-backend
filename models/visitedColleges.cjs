@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
-  class Essay extends Model {
+  class VisitedColleges extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
       // define association here
     }
   }
-  Essay.init(
+  VisitedColleges.init(
     {
       id: {
         type: Sequelize.INTEGER,
@@ -19,49 +19,49 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      essayId:{
-        type: Sequelize.UUID, // Use Sequelize.UUID data type
-        defaultValue: Sequelize.UUIDV4, // Automatically generates a UUID
-        allowNull: false,
-        unique: true
-      },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      content: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: "User",
-          key: "id",
-        },
       },
-      created_at:{
+      college_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      college_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      city_state: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      created_at: {
         type: Sequelize.DATE,
-        allowNull:false,
+        allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
-      updated_at:{
+      updated_at: {
         type: Sequelize.DATE,
-        allowNull:false,
+        allowNull: true,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
-      deleted_at:{
+      deleted_at: {
         type: Sequelize.DATE,
-        allowNull:true,
-      }
+        allowNull: true,
+      },
     },
     {
       sequelize,
-      modelName: "Essay",
-      tableName: "essay",
-      timestamps: false
+      modelName: "VisitedColleges",
+      tableName: "visitedColleges",
+      timestamps: false,
+      indexes: [
+        {
+          unique: true, // Create a combined unique index
+          fields: ["user_id", "college_id"], // Specify the columns
+        },
+      ],
     }
   );
-  return Essay;
-}
+  return VisitedColleges;
+};

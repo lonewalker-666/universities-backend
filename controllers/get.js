@@ -25,7 +25,7 @@ const getPlans = async(req,res) => {
     
         loggers.error(error.message + " from getPlans function");
     
-        return res.json({
+        return res.status(500).json({
           success: false,
           message: error.message,
         });
@@ -49,7 +49,7 @@ const getGender = async(req,res) => {
   
       loggers.error(error.message + " from getGender function");
   
-      return res.json({
+      return res.status(500).json({
         success: false,
         message: error.message,
       });
@@ -72,7 +72,7 @@ const getRace = async(req,res) => {
   
       loggers.error(error.message + " from getRace function");
   
-      return res.json({
+      return res.status(500).json({
         success: false,
         message: error.message,
       });
@@ -96,7 +96,7 @@ const getGradeLevel = async(req,res) => {
   
       loggers.error(error.message + " from getGradeLevel function");
   
-      return res.json({
+      return res.status(500).json({
         success: false,
         message: error.message,
       });
@@ -112,8 +112,7 @@ const getHighSchool = async(req,res) => {
       const highSchool = await model.HighSchool.findAll({
           attributes:['id','name','city','state','country'],
           where: whereClause,
-          limit:50
-      })
+          order:[['name','Asc']]})
 
       return res.json({
           success: true,
@@ -126,7 +125,7 @@ const getHighSchool = async(req,res) => {
   
       loggers.error(error.message + " from getHighSchool function");
   
-      return res.json({
+      return res.status(500).json({
         success: false,
         message: error.message,
       });
@@ -151,7 +150,7 @@ const getApTestSubjects = async(req,res) => {
   
       loggers.error(error.message + " from getApTestSubjects function");
   
-      return res.json({
+      return res.status(500).json({
         success: false,
         message: error.message,
       });

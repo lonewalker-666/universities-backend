@@ -31,7 +31,7 @@ const createProfile = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: error.details[0].message,
       });
@@ -44,12 +44,12 @@ const createProfile = async (req, res) => {
       gender_id,
       mobile,
       profileEmojiId,
-      location
+      location,
     } = req.body;
     const user_id = req?.user?.id || "";
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
@@ -63,7 +63,7 @@ const createProfile = async (req, res) => {
         gender_id,
         mobile,
         profileEmojiId,
-        location
+        location,
       },
       { where: { id: user_id } }
     );
@@ -76,7 +76,7 @@ const createProfile = async (req, res) => {
 
     loggers.error(error.message + " from createProfile function");
 
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",
     });
@@ -93,7 +93,7 @@ const updatePersonalInfo = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: error.details[0].message,
       });
@@ -108,12 +108,12 @@ const updatePersonalInfo = async (req, res) => {
     const user_id = req?.user?.id || "";
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
     }
-   const result = await model.User.update(
+    const result = await model.User.update(
       {
         race_id,
         armed_force_status_id,
@@ -126,14 +126,14 @@ const updatePersonalInfo = async (req, res) => {
     return res.json({
       success: true,
       message: "Personal Info updated Successfully",
-      data:result
+      data: result,
     });
   } catch (error) {
     console.error("Error in updatePersonalInfo:", error);
 
     loggers.error(error.message + " from updatePersonalInfo function");
 
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",
     });
@@ -150,7 +150,7 @@ const updateAccademicBackground = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: error.details[0].message,
       });
@@ -161,12 +161,12 @@ const updateAccademicBackground = async (req, res) => {
       college_start_date,
       graduation_date,
       gpa,
-      class_rank
+      class_rank,
     } = req.body;
     const user_id = req?.user?.id || "";
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
@@ -178,7 +178,7 @@ const updateAccademicBackground = async (req, res) => {
         college_start_date,
         graduation_date,
         gpa,
-        class_rank: class_rank || null
+        class_rank: class_rank || null,
       },
       { where: { id: user_id } }
     );
@@ -191,7 +191,7 @@ const updateAccademicBackground = async (req, res) => {
 
     loggers.error(error.message + " from updateAccademicBackground function");
 
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",
     });
@@ -208,12 +208,12 @@ const updateActTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
@@ -238,7 +238,7 @@ const updateActTestScore = async (req, res) => {
 
     loggers.error(error.message + " from updateActTestScore function");
 
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",
     });
@@ -255,12 +255,12 @@ const updateSatTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
@@ -285,7 +285,7 @@ const updateSatTestScore = async (req, res) => {
 
     loggers.error(error.message + " from updateSatTestScore function");
 
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",
     });
@@ -302,12 +302,12 @@ const updateToeflTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
@@ -335,7 +335,7 @@ const updateToeflTestScore = async (req, res) => {
 
     loggers.error(error.message + " from updateToeflTestScore function");
 
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",
     });
@@ -352,12 +352,12 @@ const updateIELTSTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
@@ -385,7 +385,7 @@ const updateIELTSTestScore = async (req, res) => {
 
     loggers.error(error.message + " from updateIELTSTestScore function");
 
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",
     });
@@ -402,12 +402,12 @@ const updateAPTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
@@ -417,7 +417,7 @@ const updateAPTestScore = async (req, res) => {
       where: { id: subject_id, test_id: 3 },
     });
     if (!checkSubject) {
-      return res.json({
+      return res.status(404).json({
         success: false,
         message: "Subject Not Found.",
       });
@@ -447,7 +447,7 @@ const updateAPTestScore = async (req, res) => {
 
     loggers.error(error.message + " from updateAPTestScore function");
 
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",
     });
@@ -485,20 +485,52 @@ const getProfile = async (req, res) => {
       where: { id: user_id },
       include: [
         {
-          model: model.TestScore, 
-          attributes: ['test_id', 'subject_id', 'score'], 
-          order:[['id','Asc']],
+          model: model.HighSchool,
+          attributes: ["id", "name","state"],
+        },
+        {
+          model: model.GradeLevel,
+          attributes: ["id", "name"],
+        },
+        {
+          model: model.Gender,
+          attributes: ["id", "name"],
+        },
+        {
+          model: model.Race,
+          attributes: ["id", "name"],
+        },
+        {
+          model: model.Armed_Force_Status,
+          attributes: ["id", "name"],
+        },
+        {
+          model: model.FirstGeneration,
+          attributes: ["id", "name"],
+        },
+        {
+          model: model.Citizenship,
+          attributes: ["id", "name"],
+        },
+        {
+          model: model.FinancialAid,
+          attributes: ["id", "name"],
+        },
+        {
+          model: model.TestScore,
+          attributes: ["test_id", "subject_id", "score"],
+          order: [["id", "Asc"]],
           include: [
             {
               model: model.TestSubjects,
-              attributes: ['id', 'name'],
+              attributes: ["id", "name"],
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     });
     if (!profile) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: "User Not Found.",
       });
@@ -506,12 +538,12 @@ const getProfile = async (req, res) => {
     return res.json({
       success: true,
       message: "Profile fetched successfully",
-      data: profile,
+      profile,
     });
   } catch (error) {
     console.error("Error in getProfile:", error);
     loggers.error(error.message + " from getProfile function");
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",
     });
@@ -528,17 +560,26 @@ const updateProfile = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
     }
-    const { firstName, lastName, email, mobile,dob, profileEmojiId, location, about} = req.body;  
+    const {
+      firstName,
+      lastName,
+      email,
+      mobile,
+      // dob,
+      profileEmojiId,
+      location,
+      // about,
+    } = req.body;
     await model.User.update(
       {
         firstName,
@@ -546,9 +587,9 @@ const updateProfile = async (req, res) => {
         email,
         mobile,
         location,
-        dob,
+        // dob,
         profileEmojiId,
-        about
+        // about,
       },
       { where: { id: user_id } }
     );
@@ -559,9 +600,9 @@ const updateProfile = async (req, res) => {
   } catch (error) {
     console.error("Error in updateProfile:", error);
     loggers.error(error.message + " from updateProfile function");
-    return res.json({
+    return res.status(500).json({
       success: false,
-      message: error?.message || "Internal Server Error",    
+      message: error?.message || "Internal Server Error",
     });
   }
 };
@@ -576,17 +617,24 @@ const updateProfilePersonal = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
     }
-    const { race_id,gender_id, armed_force_status_id, first_generation_id, citizenship_id, financial_aid_id} = req.body;  
+    const {
+      race_id,
+      gender_id,
+      armed_force_status_id,
+      first_generation_id,
+      citizenship_id,
+      financial_aid_id,
+    } = req.body;
     await model.User.update(
       {
         race_id,
@@ -594,7 +642,7 @@ const updateProfilePersonal = async (req, res) => {
         first_generation_id,
         citizenship_id,
         gender_id,
-        financial_aid_id
+        financial_aid_id,
       },
       { where: { id: user_id } }
     );
@@ -605,9 +653,9 @@ const updateProfilePersonal = async (req, res) => {
   } catch (error) {
     console.error("Error in updateProfilePersonal:", error);
     loggers.error(error.message + " from updateProfilePersonal function");
-    return res.json({
+    return res.status(500).json({
       success: false,
-      message: error?.message || "Internal Server Error",    
+      message: error?.message || "Internal Server Error",
     });
   }
 };
@@ -622,22 +670,22 @@ const updateAdditionalInfo = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
     }
-    const { houseHeld, physical_disability, additionalInfo} = req.body;  
+    const { houseHeld, physical_disability, additionalInfo } = req.body;
     await model.User.update(
       {
         houseHeld,
         physical_disability,
-        additionalInfo
+        additionalInfo,
       },
       { where: { id: user_id } }
     );
@@ -648,12 +696,12 @@ const updateAdditionalInfo = async (req, res) => {
   } catch (error) {
     console.error("Error in updateAdditionalInfo:", error);
     loggers.error(error.message + " from updateAdditionalInfo function");
-    return res.json({
+    return res.status(500).json({
       success: false,
-      message: error?.message || "Internal Server Error",    
+      message: error?.message || "Internal Server Error",
     });
   }
-}
+};
 
 const AddExtracurriculars = async (req, res) => {
   try {
@@ -665,38 +713,36 @@ const AddExtracurriculars = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
     }
-    const { activity} = req.body;  
-   const extraCurriculars = await model.ExtraCurriculars.create(
-      {
-        activity,
-        user_id,
-        created_by: checkUser.email
-      }
-    );
+    const { activity } = req.body;
+    const extraCurriculars = await model.ExtraCurriculars.create({
+      activity,
+      user_id,
+      created_by: checkUser.email,
+    });
     res.json({
       success: true,
       message: "Extracurriculars added successfully",
-      data: {id: extraCurriculars?.id, activity: extraCurriculars?.activity},
+      data: { id: extraCurriculars?.id, activity: extraCurriculars?.activity },
     });
   } catch (error) {
     console.error("Error in AddExtracurriculars:", error);
     loggers.error(error.message + " from AddExtracurriculars function");
-    return res.json({
+    return res.status(500).json({
       success: false,
-      message: error?.message || "Internal Server Error",    
+      message: error?.message || "Internal Server Error",
     });
   }
-}
+};
 
 const DeleteExtracurriculars = async (req, res) => {
   try {
@@ -708,25 +754,25 @@ const DeleteExtracurriculars = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
     }
-    const { activity_id} = req.body;  
+    const { activity_id } = req.body;
     const now = getCurrentTimestamp();
-  await model.ExtraCurriculars.update(
+    await model.ExtraCurriculars.update(
       {
         deleted_at: now,
-        deleted_by: checkUser.email
+        deleted_by: checkUser.email,
       },
       {
-        where: { id: activity_id }
+        where: { id: activity_id },
       }
     );
     res.json({
@@ -736,12 +782,12 @@ const DeleteExtracurriculars = async (req, res) => {
   } catch (error) {
     console.error("Error in DeleteExtracurriculars:", error);
     loggers.error(error.message + " from DeleteExtracurriculars function");
-    return res.json({
+    return res.status(500).json({
       success: false,
-      message: error?.message || "Internal Server Error",    
+      message: error?.message || "Internal Server Error",
     });
   }
-}
+};
 
 const AddPreferedCollege = async (req, res) => {
   try {
@@ -753,38 +799,36 @@ const AddPreferedCollege = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
     }
-    const { college} = req.body;  
-   const preferedColleges = await model.PreferedColleges.create(
-      {
-        name: college,
-        user_id,
-        created_by: checkUser.email
-      },
-    );
+    const { college } = req.body;
+    const preferedColleges = await model.PreferedColleges.create({
+      name: college,
+      user_id,
+      created_by: checkUser.email,
+    });
     res.json({
       success: true,
       message: "Prefered College added successfully",
-      data: {id: preferedColleges?.id, college: preferedColleges?.name},
+      data: { id: preferedColleges?.id, college: preferedColleges?.name },
     });
   } catch (error) {
     console.error("Error in AddPreferedCollege:", error);
     loggers.error(error.message + " from AddPreferedCollege function");
-    return res.json({
+    return res.status(500).json({
       success: false,
-      message: error?.message || "Internal Server Error",    
+      message: error?.message || "Internal Server Error",
     });
-}
-}
+  }
+};
 
 const DeletePreferedCollege = async (req, res) => {
   try {
@@ -796,25 +840,25 @@ const DeletePreferedCollege = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
     }
-    const { college_id} = req.body;  
+    const { college_id } = req.body;
     const now = getCurrentTimestamp();
-  await model.PreferedColleges.update(
+    await model.PreferedColleges.update(
       {
         deleted_at: now,
-        deleted_by: checkUser.email
+        deleted_by: checkUser.email,
       },
       {
-        where: { id: college_id }
+        where: { id: college_id },
       }
     );
     res.json({
@@ -824,12 +868,12 @@ const DeletePreferedCollege = async (req, res) => {
   } catch (error) {
     console.error("Error in DeletePreferedCollege:", error);
     loggers.error(error.message + " from DeletePreferedCollege function");
-    return res.json({
+    return res.status(500).json({
       success: false,
-      message: error?.message || "Internal Server Error",    
+      message: error?.message || "Internal Server Error",
     });
   }
-}
+};
 
 const AddPreferedMajor = async (req, res) => {
   try {
@@ -841,84 +885,81 @@ const AddPreferedMajor = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.json({ success: false, message: error.details[0].message });
+      return res.status(400).json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "User Not Found.",
       });
     }
-    const { major} = req.body;  
-   const preferedMajors = await model.PreferedMajors.create(
-      {
-        name: major,
-        user_id,
-        created_by: checkUser.email
-      },
-    );
+    const { major } = req.body;
+    const preferedMajors = await model.PreferedMajors.create({
+      name: major,
+      user_id,
+      created_by: checkUser.email,
+    });
     res.json({
       success: true,
       message: "Prefered Major added successfully",
-      data: {id: preferedMajors?.id, major: preferedMajors?.name},
+      data: { id: preferedMajors?.id, major: preferedMajors?.name },
     });
   } catch (error) {
     console.error("Error in AddPreferedMajor:", error);
     loggers.error(error.message + " from AddPreferedMajor function");
-    return res.json({
+    return res.status(500).json({
       success: false,
-      message: error?.message || "Internal Server Error",    
+      message: error?.message || "Internal Server Error",
     });
-}
-   }
-
-   const DeletePreferedMajor = async (req, res) => {
-     try {
-       const { error } = DeletePreferedMajorSchema.validate(req.body, {
-         abortEarly: false,
-       });
-       if (error) {
-         loggers.error(
-           "Validation error: " +
-             error.details.map((err) => err.message).join(", ")
-         );
-         return res.json({ success: false, message: error.details[0].message });
-       }
-       const user_id = req?.user?.id;
-       const checkUser = await model.User.findOne({ where: { id: user_id } });
-       if (!checkUser) {
-         return res.json({
-           success: false,
-           message: "User Not Found.",
-         });
-       }
-       const { major_id} = req.body;  
-       const now = getCurrentTimestamp(); 
-     await model.PreferedMajors.update(
-         {
-           deleted_at: now,
-           deleted_by: checkUser.email
-         },
-         {
-           where: { id: major_id }
-         }
-       );
-       res.json({
-         success: true,
-         message: "Prefered Major deleted successfully",
-       });
-     } catch (error) {  
-       console.error("Error in DeletePreferedMajor:", error);
-       loggers.error(error.message + " from DeletePreferedMajor function");
-       return res.json({
-         success: false,
-         message: error?.message || "Internal Server Error",    
-       });
-     
-   }
   }
+};
+
+const DeletePreferedMajor = async (req, res) => {
+  try {
+    const { error } = DeletePreferedMajorSchema.validate(req.body, {
+      abortEarly: false,
+    });
+    if (error) {
+      loggers.error(
+        "Validation error: " +
+          error.details.map((err) => err.message).join(", ")
+      );
+      return res.status(400).json({ success: false, message: error.details[0].message });
+    }
+    const user_id = req?.user?.id;
+    const checkUser = await model.User.findOne({ where: { id: user_id } });
+    if (!checkUser) {
+      return res.status(401).json({
+        success: false,
+        message: "User Not Found.",
+      });
+    }
+    const { major_id } = req.body;
+    const now = getCurrentTimestamp();
+    await model.PreferedMajors.update(
+      {
+        deleted_at: now,
+        deleted_by: checkUser.email,
+      },
+      {
+        where: { id: major_id },
+      }
+    );
+    res.json({
+      success: true,
+      message: "Prefered Major deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error in DeletePreferedMajor:", error);
+    loggers.error(error.message + " from DeletePreferedMajor function");
+    return res.status(500).json({
+      success: false,
+      message: error?.message || "Internal Server Error",
+    });
+  }
+};
 
 export {
   createProfile,
@@ -938,5 +979,5 @@ export {
   AddPreferedCollege,
   DeletePreferedCollege,
   AddPreferedMajor,
-  DeletePreferedMajor
+  DeletePreferedMajor,
 };

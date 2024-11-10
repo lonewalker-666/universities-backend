@@ -197,9 +197,9 @@ const updateAPTestScoreSchema = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),
-  dob: Joi.string().required(),
+  // dob: Joi.string().required(),
   location: Joi.string().required(),
-  about: Joi.string().required().max(1000),
+  // about: Joi.string().required().max(1000),
 });
 
  const updateProfilePersonalSchema = Joi.object({

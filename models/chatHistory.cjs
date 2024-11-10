@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
-  class Essay extends Model {
+  class ChatHistory extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
       // define association here
     }
   }
-  Essay.init(
+  ChatHistory.init(
     {
       id: {
         type: Sequelize.INTEGER,
@@ -19,49 +19,34 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      essayId:{
-        type: Sequelize.UUID, // Use Sequelize.UUID data type
-        defaultValue: Sequelize.UUIDV4, // Automatically generates a UUID
+      user_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
+      },
+      chatId: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       title: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      content: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      user_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "User",
-          key: "id",
-        },
-      },
-      created_at:{
+      created_at: {
         type: Sequelize.DATE,
-        allowNull:false,
+        allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
-      updated_at:{
+      deleted_at: {
         type: Sequelize.DATE,
-        allowNull:false,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        allowNull: true,
       },
-      deleted_at:{
-        type: Sequelize.DATE,
-        allowNull:true,
-      }
     },
     {
       sequelize,
-      modelName: "Essay",
-      tableName: "essay",
-      timestamps: false
+      modelName: "ChatHistory",
+      tableName: "chatHistory",
+      timestamps: false,
     }
   );
-  return Essay;
-}
+  return ChatHistory;
+};

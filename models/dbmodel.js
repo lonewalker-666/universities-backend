@@ -25,6 +25,9 @@ import _extraCurriculars from "./extraCurriculars.cjs";
 import _preferedColleges from "./preferedColleges.cjs";
 import _preferedMajors from "./preferedMajors.cjs";
 import _essay from "./essay.cjs";
+import _visitedColleges from "./visitedColleges.cjs"
+import _wishlist from "./wishlist.cjs"
+import _verifiedEmails from "./verifiedEmails.cjs"
 
 export default function dbModel(sequelize, Sequelize) {
   const Gender = _gender(sequelize, Sequelize);
@@ -54,6 +57,9 @@ export default function dbModel(sequelize, Sequelize) {
   const PreferedColleges = _preferedColleges(sequelize,Sequelize);
   const PreferedMajors = _preferedMajors(sequelize,Sequelize);
   const Essay = _essay(sequelize,Sequelize);
+  const VisitedColleges = _visitedColleges(sequelize,Sequelize);
+  const Wishlist = _wishlist(sequelize,Sequelize);
+  const VerifiedEmails = _verifiedEmails(sequelize,Sequelize);
 
   User.belongsTo(Gender, { foreignKey: "gender_id" });
   Plan.hasMany(PlanDescription, { foreignKey: "plan_id" });
@@ -88,6 +94,8 @@ export default function dbModel(sequelize, Sequelize) {
 
   Essay.belongsTo(User, { foreignKey: "user_id" });
 
+  Wishlist.belongsTo(User, { foreignKey: "user_id" });
+  VisitedColleges.belongsTo(User, { foreignKey: "user_id" });
 
   return {
     Gender,
@@ -116,6 +124,9 @@ export default function dbModel(sequelize, Sequelize) {
     ExtraCurriculars,
     PreferedColleges,
     PreferedMajors,
-    Essay
+    Essay,
+    VisitedColleges,
+    Wishlist,
+    VerifiedEmails
   };
 }
