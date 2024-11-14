@@ -10,12 +10,9 @@ import { UniqueConstraintError } from "sequelize";
 import { getCurrentTimestamp } from "../lib/util.js";
 import { comparePassword, hashPassword } from "../middleware/secure.js";
 import config from "../config/config.js";
-import { v4 as uuidv4 } from "uuid";
 import {
   addOtp,
-  addVerificationId,
   isValidOTP,
-  isValidVerificationId,
 } from "../validations/validator.js";
 import {
   generateAccessToken,
@@ -218,7 +215,7 @@ async function login(req, res) {
     const user = await model.User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(401).json({
+      return res.status(400).json({
         success: false,
         message: "Invalid email or password.",
       });
@@ -227,7 +224,7 @@ async function login(req, res) {
     // Check password
     const isPasswordValid = await comparePassword(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({
+      return res.status(400).json({
         success: false,
         message: "Invalid email or password.",
       });
