@@ -156,7 +156,7 @@ const updateAccademicBackground = async (req, res) => {
       });
     }
     const {
-      highSchool_id,
+      high_school_id,
       grade_level_id,
       college_start_date,
       graduation_date,
@@ -173,7 +173,7 @@ const updateAccademicBackground = async (req, res) => {
     }
     await model.User.update(
       {
-        highSchool_id,
+        high_school_id,
         grade_level_id,
         college_start_date,
         graduation_date,
@@ -481,6 +481,7 @@ const getProfile = async (req, res) => {
         "houseHeld",
         "physical_disability",
         "additionalInfo",
+        "class_rank"
       ],
       where: { id: user_id },
       include: [

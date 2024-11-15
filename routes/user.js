@@ -33,6 +33,7 @@ router.post(
   authenticateToken,
   updateAccademicBackground
 );
+
 router.post("/updateActTestScore", authenticateToken, updateActTestScore);
 router.post("/updateSatTestScore", authenticateToken, updateSatTestScore);
 router.post("/updateToeflTestScore", authenticateToken, updateToeflTestScore);

@@ -10,5 +10,7 @@ const getCollegesSchema = Joi.object({
 const getCollegeOneSchema = Joi.object({
     id: Joi.number().required(),
   });
-
-export { getCollegesSchema,getCollegeOneSchema };
+const AddToWishlistSchema = Joi.object({
+    college_id: Joi.number().required(),
+})
+export { getCollegesSchema,getCollegeOneSchema,AddToWishlistSchema };

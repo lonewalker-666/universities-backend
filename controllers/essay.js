@@ -18,7 +18,7 @@ const getEssay = async (req, res) => {
       });
     }
     const essays = await model.Essay.findAll({
-      order: [["id", "DESC"]],
+      order: [["essayId", "DESC"]],
       where: { user_id },
     });
     return res.json({ success: true, essays });
@@ -141,10 +141,9 @@ const editEssay = async (req, res) => {
       });
     }
     await model.Essay.update({
-      essayId,
       content,
       title,
-    });
+    },{where:{essayId}});
     return res.json({ success: true, message: "Essay Updated" });
   } catch (error) {
     if (error instanceof UniqueConstraintError) {

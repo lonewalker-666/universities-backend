@@ -6,7 +6,10 @@ import { authenticateToken } from '../middleware/token.js';
 
 const router = express.Router();
 
-router.post("/getColleges",authenticateToken, getCollegesList)
 router.get("/getCollegeOne/:id",authenticateToken, getCollegeOne)
+router.post("/getColleges",authenticateToken, getCollegesList)
+
+router.put("/addToWishlist/:id",authenticateToken, getCollegeOne)
+
 
 export default router;

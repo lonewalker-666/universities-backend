@@ -21,7 +21,7 @@ const updatePersonalInfoSchema = Joi.object({
 });
 
 const updateAccademicBackgroundSchema = Joi.object({
-  highSchool_id: Joi.number().required(),
+  high_school_id: Joi.number().required(),
   grade_level_id: Joi.number().required(),
   college_start_date: Joi.string().required(),
   graduation_date: Joi.string().required(),
