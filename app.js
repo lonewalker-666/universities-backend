@@ -9,6 +9,8 @@ dotenv.config();
 const app = express();
 const allowedOrigins = [
     'http://localhost:3000',
+    'https://dev.theuniversitiesusa.com/',
+    'https://theuniversitiesusa.com/'
   ];
   
   const corsOptions = {
