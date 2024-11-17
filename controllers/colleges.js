@@ -324,7 +324,8 @@ const getWishlist = async (req, res) => {
     const user_id = req?.user?.id;
     const wishlist = await model.Wishlist.findAll({
       where: { user_id: user_id, deleted_at: null },
-      attributes:['id','college_id','college_name','city_state']
+      attributes:['id','college_id','college_name','city_state'],
+      order: [["id", "DESC"]],
     });
     return res.status(200).json({
       success: true,
@@ -346,7 +347,8 @@ const recentlyVisited = async (req, res) => {
     const user_id = req?.user?.id;
     const visited = await model.VisitedColleges.findAll({
       where: { user_id: user_id, deleted_at: null },
-      attributes:['id','college_id','college_name','city_state']
+      attributes:['id','college_id','college_name','city_state'],
+      order: [["updated_at", "DESC"]],
     });
     return res.status(200).json({
       success: true,
