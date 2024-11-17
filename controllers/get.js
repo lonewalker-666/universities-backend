@@ -1,6 +1,7 @@
 import model from "../models/index.js";
 import loggers from "../config/logger.js";
 import { Op } from "sequelize";
+import essay from "../models/essay.cjs";
 
 
 const getPlans = async(req,res) => {
@@ -157,6 +158,41 @@ const getApTestSubjects = async(req,res) => {
     }
 }
 
+const getOverview = async(req,res) => {
+try{
+  const checkUser = await model.User.findOne({ where: { id: req?.user?.id } });
+  if (!checkUser) {
+    return res.status(401).json({
+      success: false,
+      message: "User Not Found.",
+    });
+  }
+   const recentlyVisited = await model.VisitedColleges.findAll({
+     where: { user_id: req?.user?.id, deleted_at: null },
+     attributes:['id','college_id','college_name','city_state'],
+     limit: 5
+   });
+   const essay = await model.Essay.findAll({
+     where: { user_id: req?.user?.id, deleted_at: null },
+    //  attributes:[essay_id]
+   })
+  return res.json({
+    success: true,
+    message: "Overview fetched Successfully",
+    data: overview,
+  });
+}
+catch (error) {
+    console.error("Error in getOverview:", error);
+
+    loggers.error(error.message + " from getOverview function");
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 
 export {
   getGender,

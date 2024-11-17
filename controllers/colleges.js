@@ -8,6 +8,7 @@ import {
   getCollegeOneSchema,
   getCollegesSchema,
 } from "../validations/colleges.js";
+import { getCurrentTimestamp } from "../lib/util.js";
 
 const getCollegesList = async (req, res) => {
   try {
@@ -267,7 +268,7 @@ const addToWishlist = async (req, res) => {
         .status(400)
         .json({ success: false, message: error.details[0].message });
     }
-    const { college_id } = req.body;
+    const { college_id,college_name,city_state } = req.body;
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
     if (!checkUser) {
@@ -277,7 +278,7 @@ const addToWishlist = async (req, res) => {
       });
     }
     const checkWishlist = await model.Wishlist.findOne({
-      where: { user_id: user_id, college_id: college_id },
+      where: { user_id: user_id, college_id: college_id,deleted_at: null },
     });
     if (checkWishlist) {
       await model.Wishlist.update(
@@ -291,19 +292,22 @@ const addToWishlist = async (req, res) => {
       );
       return res.status(200).json({
         success: true,
-        message: "College added to wishlist.",
+        message: "College removed from wishlist.",
         wishlisted: false,
       });
     }
-    await model.Wishlist.create({
+    await model.Wishlist.upsert({
       user_id: user_id,
       college_id: college_id,
+      college_name: college_name,
+      city_state: city_state,
       deleted_at: null,
       deleted_by: null,
     });
     return res.status(200).json({
       success: true,
       message: "College added to wishlist.",
+      wishlisted: true,
     });
   } catch (error) {
     console.error("Error in AddToWishlist:", error);
@@ -315,4 +319,48 @@ const addToWishlist = async (req, res) => {
   }
 };
 
-export { getCollegesList, getCollegeOne, addToWishlist };
+const getWishlist = async (req, res) => {
+  try {
+    const user_id = req?.user?.id;
+    const wishlist = await model.Wishlist.findAll({
+      where: { user_id: user_id, deleted_at: null },
+      attributes:['id','college_id','college_name','city_state']
+    });
+    return res.status(200).json({
+      success: true,
+      message: "Wishlist fetched Successfully",
+      wishlist,
+    });
+  } catch (error) {
+    console.error("Error in getWishlist:", error);
+    loggers.error(error.message + " from getWishlist function");
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const recentlyVisited = async (req, res) => {
+  try {
+    const user_id = req?.user?.id;
+    const visited = await model.VisitedColleges.findAll({
+      where: { user_id: user_id, deleted_at: null },
+      attributes:['id','college_id','college_name','city_state']
+    });
+    return res.status(200).json({
+      success: true,
+      message: "Recently visited fetched Successfully",
+      visited,
+    });
+  } catch (error) {
+    console.error("Error in Recently Visited:", error);
+    loggers.error(error.message + " from Recently Visited function");
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
+export { getCollegesList, getCollegeOne, addToWishlist,getWishlist,recentlyVisited };
