@@ -28,6 +28,8 @@ import _essay from "./essay.cjs";
 import _visitedColleges from "./visitedColleges.cjs"
 import _wishlist from "./wishlist.cjs"
 import _verifiedEmails from "./verifiedEmails.cjs"
+import _chatHistory from "./chatHistory.cjs"
+import _chatResponse from "./chatResponse.cjs"
 
 export default function dbModel(sequelize, Sequelize) {
   const Gender = _gender(sequelize, Sequelize);
@@ -60,6 +62,8 @@ export default function dbModel(sequelize, Sequelize) {
   const VisitedColleges = _visitedColleges(sequelize,Sequelize);
   const Wishlist = _wishlist(sequelize,Sequelize);
   const VerifiedEmails = _verifiedEmails(sequelize,Sequelize);
+  const ChatHistory = _chatHistory(sequelize,Sequelize);
+  const ChatResponse = _chatResponse(sequelize,Sequelize);
 
   User.belongsTo(Gender, { foreignKey: "gender_id" });
   Plan.hasMany(PlanDescription, { foreignKey: "plan_id" });
@@ -96,6 +100,10 @@ export default function dbModel(sequelize, Sequelize) {
 
   Wishlist.belongsTo(User, { foreignKey: "user_id" });
   VisitedColleges.belongsTo(User, { foreignKey: "user_id" });
+  User.hasMany(ChatHistory, { foreignKey: "user_id" });
+  ChatHistory.belongsTo(User, { foreignKey: "user_id" });
+  ChatHistory.hasMany(ChatResponse, { foreignKey: "chat_id" });
+  ChatResponse.belongsTo(ChatHistory, { foreignKey: "chat_id" });
 
   return {
     Gender,
@@ -127,6 +135,8 @@ export default function dbModel(sequelize, Sequelize) {
     Essay,
     VisitedColleges,
     Wishlist,
-    VerifiedEmails
+    VerifiedEmails,
+    ChatHistory,
+    ChatResponse
   };
 }

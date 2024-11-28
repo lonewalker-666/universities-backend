@@ -15,6 +15,7 @@ const getPlans = async (req, res) => {
           order: [["id", "Asc"]],
         },
       ],
+      where:{active:1}
     });
     return res.json({
       success: true,

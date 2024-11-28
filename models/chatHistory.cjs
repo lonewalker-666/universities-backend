@@ -22,14 +22,20 @@ module.exports = (sequelize, Sequelize) => {
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "User",
+          key: "id",
+        }
       },
       chatId: {
-        type: Sequelize.STRING,
+        type: Sequelize.UUID, // Use Sequelize.UUID data type
+        defaultValue: Sequelize.UUIDV4, // Automatically generates a UUID
         allowNull: false,
+        unique: true
       },
       title: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,

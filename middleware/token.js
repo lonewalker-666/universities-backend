@@ -8,10 +8,7 @@ const generateAccessToken = (user) => {
     {
       id: user.id,
       firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      mobile: user.mobile,
-      plan_id: user.plan_id,
+      lastName: user.lastName
     },
     config.accessSecret,
     { expiresIn: config.accessTokenExpiration }
@@ -23,10 +20,7 @@ const generateRefreshToken = (user) => {
     {
       id: user.id,
       firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      mobile: user.mobile,
-      plan_id: user.plan_id,
+      lastName: user.lastName
     },
     config.refreshSecret,
     { expiresIn: config.refreshTokenExpiration }
@@ -36,14 +30,11 @@ const generateRefreshToken = (user) => {
 const issueToken = (token) => {
   try {
     const decoded = jwt.verify(token, config.refreshSecret);
-    const { id, firstName, lastName, email, phoneNumber, plan_id } = decoded;
+    const { id, firstName, lastName } = decoded;
     const user = {
       id,
       firstName,
-      lastName,
-      email,
-      phoneNumber,
-      plan_id,
+      lastName
     };
 
     return generateAccessToken(user);

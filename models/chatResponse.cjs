@@ -22,6 +22,10 @@ module.exports = (sequelize, Sequelize) => {
       chat_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references:{
+            model:"ChatHistory",
+            key: "id" 
+        }
       },
       request: {
         type: Sequelize.JSON,

@@ -5,6 +5,8 @@ import blogsRouter from "./blogs.js"
 import userRouter from "./user.js"
 import essayRouter from "./essay.js"
 import collegesRouter from "./colleges.js"
+import chatRouter from "./chat.js"
+import paymentsRouter from "./payments.js"
 
 
 const router = express.Router();
@@ -15,6 +17,8 @@ router.use("/blogs",blogsRouter)
 router.use("/user",userRouter)
 router.use("/essay",essayRouter)
 router.use("/colleges",collegesRouter)
+router.use("/chat",chatRouter)
+router.use("/payments",paymentsRouter)
 
 
 

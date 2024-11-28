@@ -208,7 +208,9 @@ const updateActTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -255,7 +257,9 @@ const updateSatTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -302,7 +306,9 @@ const updateToeflTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -352,7 +358,9 @@ const updateIELTSTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -402,7 +410,9 @@ const updateAPTestScore = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -481,13 +491,13 @@ const getProfile = async (req, res) => {
         "houseHeld",
         "physical_disability",
         "additionalInfo",
-        "class_rank"
+        "class_rank",
       ],
       where: { id: user_id },
       include: [
         {
           model: model.HighSchool,
-          attributes: ["id", "name","state"],
+          attributes: ["id", "name", "state"],
         },
         {
           model: model.GradeLevel,
@@ -561,7 +571,9 @@ const updateProfile = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -618,7 +630,9 @@ const updateProfilePersonal = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -671,7 +685,9 @@ const updateAdditionalInfo = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -714,7 +730,9 @@ const AddExtracurriculars = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -755,7 +773,9 @@ const DeleteExtracurriculars = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -800,7 +820,9 @@ const AddPreferedCollege = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -841,7 +863,9 @@ const DeletePreferedCollege = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -886,7 +910,9 @@ const AddPreferedMajor = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -927,7 +953,9 @@ const DeletePreferedMajor = async (req, res) => {
         "Validation error: " +
           error.details.map((err) => err.message).join(", ")
       );
-      return res.status(400).json({ success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
     }
     const user_id = req?.user?.id;
     const checkUser = await model.User.findOne({ where: { id: user_id } });
@@ -955,6 +983,43 @@ const DeletePreferedMajor = async (req, res) => {
   } catch (error) {
     console.error("Error in DeletePreferedMajor:", error);
     loggers.error(error.message + " from DeletePreferedMajor function");
+    return res.status(500).json({
+      success: false,
+      message: error?.message || "Internal Server Error",
+    });
+  }
+};
+
+const getUser = async (req, res) => {
+  try {
+    const user_id = req?.user?.id;
+    const checkUser = await model.User.findOne({
+      where: { id: user_id },
+      attributes: [
+        "id",
+        "email",
+        "first_name",
+        "last_name",
+        "mobile",
+        "profile_emoji_id",
+        "plan_id",
+        ""
+      ],
+    });
+    if (!checkUser) {
+      return res.status(401).json({
+        success: false,
+        message: "User Not Found.",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User found successfully",
+      data: checkUser,
+    });
+  } catch (error) {
+    console.error("Error in getUser:", error);
+    loggers.error(error.message + " from getUser function");
     return res.status(500).json({
       success: false,
       message: error?.message || "Internal Server Error",

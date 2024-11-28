@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const envVarsSchema = Joi.object({
-//   NODE_ENV: Joi.string()
-//     .valid("development", "production", "test")
-//     .default("development"),
+  //   NODE_ENV: Joi.string()
+  //     .valid("development", "production", "test")
+  //     .default("development"),
   PORT: Joi.number().default(8000),
   ACCESS_SECRET: Joi.string().required(),
   ACCESS_TOKEN_EXPIRATION: Joi.number().required(),
@@ -18,20 +18,10 @@ const envVarsSchema = Joi.object({
   FACEBOOK_CLIENT_SECRET: Joi.string().required(),
   COLLEGES_API_END_POINT: Joi.string().required(),
   COLLEGES_API_KEY: Joi.string().required(),
-//   FRONTEND_URL: Joi.string().required(),
-//   AWS_REGION: Joi.string().required(),
-//   AWS_S3_BUCKET_NAME: Joi.string().required(),
-//   AWS_S3_BUCKET_PATH: Joi.string().required(),
-//   SES_SMTP_HOST: Joi.string().required(),
-//   SES_SMTP_PORT: Joi.string().required(),
-//   SES_SMTP_USERNAME: Joi.string().required(),
-//   SES_SMTP_PASSWORD: Joi.string().required(),
-//   SMTP_FROM_EMAIL: Joi.string().required(),
+  //   FRONTEND_URL: Joi.string().required(),
+  CHAT_END_POINT: Joi.string().required(),
   SALT_ROUNDS: Joi.number().required(),
   GOOGLE_OAUTH_CLIENT: Joi.string().required(),
-//   LINKEDIN_CLIENT_ID: Joi.string().required(),
-//   LINKEDIN_CLIENT_SECRET: Joi.string().required(),
-//   LINKEDIN_REDIRECT_URI: Joi.string().required(),
 })
   .unknown()
   .required();
@@ -42,7 +32,7 @@ if (error) {
 }
 
 const config = {
-//   env: envVars.NODE_ENV,
+  //   env: envVars.NODE_ENV,
   port: envVars.PORT,
   accessSecret: envVars.ACCESS_SECRET,
   accessTokenExpiration: envVars.ACCESS_TOKEN_EXPIRATION,
@@ -51,16 +41,9 @@ const config = {
   mysql: {
     host: envVars.DB_URL,
   },
-//   frontEndUrl: envVars.FRONTEND_URL,
-//   awsRegion: envVars.AWS_REGION,
-//   awsS3BucketName: envVars.AWS_S3_BUCKET_NAME,
-//   awsS3BucketPath: envVars.AWS_S3_BUCKET_PATH,
-//   sesSmtpHost: envVars.SES_SMTP_HOST,
-//   sesSmtpPort: envVars.SES_SMTP_PORT,
-//   sesSmtpUsername: envVars.SES_SMTP_USERNAME,
-//   sesSmtpPassword: envVars.SES_SMTP_PASSWORD,
-//   smtpFromEmail: envVars.SMTP_FROM_EMAIL,
+  //   frontEndUrl: envVars.FRONTEND_URL,
   saltRounds: envVars.SALT_ROUNDS,
+  chatUrl: envVars.CHAT_END_POINT,
   googleOauthClient: envVars.GOOGLE_OAUTH_CLIENT,
   msg91_otp_template_id: envVars.MSG91_OTP_TEMPLATE_ID,
   msg91_api_key: envVars.MSG91_KEY,
@@ -68,11 +51,6 @@ const config = {
   facebook_client_secret: envVars.FACEBOOK_CLIENT_SECRET,
   colleges_api_endpoint: envVars.COLLEGES_API_END_POINT,
   colleges_api_key: envVars.COLLEGES_API_KEY,
-//   linkedinClientId: envVars.LINKEDIN_CLIENT_ID,
-//   linkedinClientSecret: envVars.LINKEDIN_CLIENT_SECRET,
-//   linkedinRedirectUri: envVars.LINKEDIN_REDIRECT_URI,
-//   paymentWorkingKey: envVars.PAYMENT_WORKING_KEY,
-//   paymentAccessCode: envVars.PAYMENT_ACCESS_CODE,
 };
 
 export default config;
