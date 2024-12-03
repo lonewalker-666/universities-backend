@@ -18,10 +18,11 @@ const envVarsSchema = Joi.object({
   FACEBOOK_CLIENT_SECRET: Joi.string().required(),
   COLLEGES_API_END_POINT: Joi.string().required(),
   COLLEGES_API_KEY: Joi.string().required(),
-  //   FRONTEND_URL: Joi.string().required(),
+  FRONTEND_URL: Joi.string().required(),
   CHAT_END_POINT: Joi.string().required(),
   SALT_ROUNDS: Joi.number().required(),
   GOOGLE_OAUTH_CLIENT: Joi.string().required(),
+  STRIPE_SECRET_KEY: Joi.string().required(),
 })
   .unknown()
   .required();
@@ -41,7 +42,6 @@ const config = {
   mysql: {
     host: envVars.DB_URL,
   },
-  //   frontEndUrl: envVars.FRONTEND_URL,
   saltRounds: envVars.SALT_ROUNDS,
   chatUrl: envVars.CHAT_END_POINT,
   googleOauthClient: envVars.GOOGLE_OAUTH_CLIENT,
@@ -51,6 +51,8 @@ const config = {
   facebook_client_secret: envVars.FACEBOOK_CLIENT_SECRET,
   colleges_api_endpoint: envVars.COLLEGES_API_END_POINT,
   colleges_api_key: envVars.COLLEGES_API_KEY,
+  frontend_url: envVars.FRONTEND_URL,
+  stripe_secret_key: envVars.STRIPE_SECRET_KEY
 };
 
 export default config;

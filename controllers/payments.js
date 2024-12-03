@@ -1,13 +1,14 @@
-import axios from "axios";
-import loggers from "../config/logger.js";
 import model from "../models/index.js";
 import Stripe from "stripe";
+import config from "../config/config.js";
+
+const stripeSecretKey = config.stripe_secret_key;
 
 const stripe = new Stripe(
-  "sk_test_51PibWRRqRe4yrWR1soZdbmoYirTsm9QnkUs6o1UxLDXsI9E6ha9Myx1MkF3BMP2BOFX2cOUGNXVRq8xeoSOEPPN700GFJpfN1j"
+  stripeSecretKey
 );
 
-const YOUR_DOMAIN = "http://localhost:3000";
+const YOUR_DOMAIN = config.frontend_url;
 
 const createCheckoutSession = async (req, res) => {
   try {
@@ -25,17 +26,17 @@ const createCheckoutSession = async (req, res) => {
         message: "User not found.",
       });
     }
-
+    const price_id = req?.body?.price_id
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
       line_items: [
         {
-          price: "price_1Pj4iDRqRe4yrWR1DZxv3DC7",
+          price: price_id,
           quantity: 1,
         },
       ],
       mode: "subscription",
-      return_url: `${YOUR_DOMAIN}/subscribe?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${YOUR_DOMAIN}/paymentResponse?session_id={CHECKOUT_SESSION_ID}`,
     });
     res.json({
       success: true,

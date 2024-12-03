@@ -209,6 +209,7 @@ const updateAPTestScoreSchema = Joi.object({
   citizenship_id: Joi.number().required(),
   gender_id: Joi.number().required(),
   financial_aid_id: Joi.number().required(),
+  about: Joi.string().required().max(1000),
 })
 
  const updateAdditionalInfoSchema = Joi.object({

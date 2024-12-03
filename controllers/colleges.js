@@ -48,6 +48,13 @@ const getCollegesList = async (req, res) => {
       per_page: limit,
     };
     const response = await axios.get(baseUrl, { params });
+    if(response.status !== 200){
+      return res.status(response.status).json({
+        success: false,
+        message: response.statusText,
+      });
+    }
+    const metadata = response.data.metadata;
     const colleges = response.data.results;
     const collegesList = colleges.map((college) => {
       const { overview } = CollegeDataMapper(college);
@@ -69,6 +76,7 @@ const getCollegesList = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Colleges fetched Successfully",
+      metadata,
       collegesList,
     });
   } catch (error) {

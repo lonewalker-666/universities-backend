@@ -8,6 +8,7 @@ import {
   DeletePreferedCollege,
   DeletePreferedMajor,
   getProfile,
+  getUser,
   updateAccademicBackground,
   updateActTestScore,
   updateAdditionalInfo,
@@ -24,6 +25,7 @@ import { authenticateToken } from "../middleware/token.js";
 const router = express.Router();
 
 router.get("/getProfile", authenticateToken, getProfile);
+router.get("getUser", authenticateToken, getUser);
 
 
 router.post("/createProfile", authenticateToken, createProfile);
@@ -33,7 +35,6 @@ router.post(
   authenticateToken,
   updateAccademicBackground
 );
-
 router.post("/updateActTestScore", authenticateToken, updateActTestScore);
 router.post("/updateSatTestScore", authenticateToken, updateSatTestScore);
 router.post("/updateToeflTestScore", authenticateToken, updateToeflTestScore);

@@ -1046,4 +1046,5 @@ export {
   DeletePreferedCollege,
   AddPreferedMajor,
   DeletePreferedMajor,
+  getUser
 };
