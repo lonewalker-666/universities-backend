@@ -27,6 +27,12 @@ const createCheckoutSession = async (req, res) => {
       });
     }
     const price_id = req?.body?.price_id
+    if(!price_id) {
+      res.json({
+        success: false,
+        message: "Plan Missing"
+      })
+    }
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
       line_items: [
