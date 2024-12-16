@@ -50,6 +50,10 @@ module.exports = (sequelize, Sequelize) => {
       deleted_by:{
         type: Sequelize.STRING,
         allowNull:true
+      },
+      price_id:{
+        type: Sequelize.STRING,
+        allowNull: true
       }
     },
     {

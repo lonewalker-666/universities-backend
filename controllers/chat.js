@@ -35,9 +35,10 @@ const createChat = async (req, res) => {
         chat_id: checkUnusedChats?.chat_id,
       });
     }
-    const chatBotResponse = await axios.post(config.chatUrl + "start/", {
+    const chatBotResponse = await axios.post(config.chatUrl + "/start/", {
       user_id,
     });
+    console.log(chatBotResponse?.data,"vfdvf /n");
     if (chatBotResponse?.data?.success) {
       const createChat = await model.ChatHistory.create({
         user_id,
@@ -49,10 +50,11 @@ const createChat = async (req, res) => {
           message: "Error creating chat.",
         });
       }
+      console.log("Chat created:", createChat);
       return res.status(200).json({
         success: true,
         message: "Successfully created chat.",
-        chat_id: createChat?.chat_id,
+        chat_id: createChat,
       });
     } else {
       return res.status(400).json({
@@ -113,4 +115,107 @@ const getChatHistory = async (req, res) => {
   }
 };
 
-export { createChat };
+const getChat = async (req, res) => {
+  try {
+    const user_id = req?.user?.id;
+    const chat_id = req?.params?.chat_id;
+    if (!user_id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unautorized.",
+      });
+    }
+    const checkUser = await model.User.findOne({ where: { id: user_id } });
+    if (!checkUser) {
+      return res.status(401).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+    const chatHistory = await model.ChatHistory.findOne({
+      where: { user_id, chatId:chat_id, deleted_at: null },
+      attributes: ["title", "chatId"],
+      include: [
+        {
+          model: model.ChatResponse,
+          attributes: ["id", "request", "response"],
+          limit: 1,
+          order: [["id", "DESC"]],
+          where: { deleted_at: null },
+        },
+      ],
+    });
+    return res.status(200).json({
+      success: true,
+      message: "Successfully fetched chat history.",
+      chatHistory,
+    });
+  } catch (error) {
+    console.error("Error in getChat:", error);
+    loggers.error(error.message + " from getChat function");
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};
+
+export const askBot = async (req, res) => {
+  try {
+    const user_id = req?.user?.id;
+    const { message,chatId } = req.body;
+    if (!user_id) {
+      return res.status(401).json({
+        success: false,
+        message: "Unautorized.",
+      });
+    }
+    const checkUser = await model.User.findOne({ where: { id: user_id } });
+    if (!checkUser) {
+      return res.status(401).json({
+        success: false,
+        message: "User not found.",
+      });
+    }
+    
+   const chat = await model.ChatHistory.findOne({
+      user_id,
+      chatId:chatId,
+      deleted_at:null
+    })
+
+    if(!chat?.id){
+      return res.status(400).json({
+        success: false,
+        message: "Chat not found.",
+      })
+    }
+
+    const chatBotResponse = await axios.post(config.chatUrl + "/chatbot/", {
+      user_id,
+      message,
+    });
+
+    if(chatBotResponse.status !== 200){
+      return res.status(400).json({
+        success: false,
+        message: "Chatbot is not responding.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Successfully fetched chat history.",
+      chatBotResponse,
+    });
+  } catch (error) {
+    console.error("Error in askBot:", error);
+    loggers.error(error.message + " from askBot function");
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};
+
+export { createChat, getChatHistory,getChat };

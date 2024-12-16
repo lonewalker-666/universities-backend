@@ -6,7 +6,7 @@ import essay from "../models/essay.cjs";
 const getPlans = async (req, res) => {
   try {
     const plans = await model.Plan.findAll({
-      attributes: ["id", "name", "amount", "discountedPercentage"],
+      attributes: ["id", "name", "amount", "discountedPercentage","price_id"],
       order: [["id", "Asc"]],
       include: [
         {

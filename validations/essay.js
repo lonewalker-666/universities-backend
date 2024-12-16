@@ -16,10 +16,10 @@ const getEssayOneDataSchema = Joi.object({
         }
         
         // Check that non-whitespace text is placed inside tags
-        const contentInsideTagsPattern = /<[^>]+>\s*([^<>\s]+)\s*<\/[^>]+>/;
-        if (!contentInsideTagsPattern.test(value)) {
-          return helpers.message("Essays should not be empty.");
-        }
+        // const contentInsideTagsPattern = /<[^>]+>\s*([^<>\s]+)\s*<\/[^>]+>/;
+        // if (!contentInsideTagsPattern.test(value)) {
+        //   return helpers.message("Essays should not be empty.");
+        // }
   
         return value;
       })
