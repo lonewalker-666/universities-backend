@@ -278,7 +278,7 @@ const createChat = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: "Successfully created chat.",
-        chat_id: createChat?.id, // Return the ID of the new chat
+        chat_id: createChat?.chatId, // Return the ID of the new chat
       });
     } else {
       console.error("Chatbot error:", chatBotResponse?.data);
