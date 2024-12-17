@@ -199,6 +199,14 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         defaultValue: 1,
       },
+      trial_starts_at:{
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      trial_ends_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     },
     {
       sequelize,

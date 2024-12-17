@@ -28,5 +28,5 @@ function generateTitle(text) {
     return title;
   }
   
-  module.exports = generateTitle;
+export default generateTitle;
   
